@@ -16,7 +16,7 @@ exports.getUserView = (req, res) => {
       expiresIn: 86400, // expires in 24 hours
     });
 
-    res.status(200).send({ auth: true, token: token });
+    res.status(200).send({ auth: true, token: token, admin:user.admin });
   });
 };
 
@@ -26,6 +26,7 @@ exports.postUserView =   (req, res) => {
       name: req.body.name,
       email: req.body.email,
       password: hash,
+      admin:'false'
     });
     newProduct.save((err) => {
       if (err) {
