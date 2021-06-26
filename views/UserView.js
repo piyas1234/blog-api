@@ -1,10 +1,13 @@
-const UserModel = require("../models/AuthModel");
 const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const userModel = require('../models/AuthModel');
 const config = require('./config')
 const saltRounds = 10;
+
+
+//login user
 exports.getUserView = (req, res) => {
-  UserModel.findOne({ email: req.body.email }, function (err, user) {
+  userModel.findOne({ email: req.body.email }, function (err, user) {
     if (err) return res.status(500).send("Error on the server.");
     if (!user) return res.status(404).send("No user found.");
 
@@ -20,9 +23,13 @@ exports.getUserView = (req, res) => {
   });
 };
 
+
+
+
+//create a user view
 exports.postUserView =   (req, res) => {
     bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
-    const newProduct = new UserModel({
+    const newProduct = new userModel({
       name: req.body.name,
       email: req.body.email,
       password: hash,

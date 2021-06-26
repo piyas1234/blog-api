@@ -1,30 +1,28 @@
-const  mongoose =   require('mongoose')
-const { Schema } = mongoose;
+// Require mongoose library for MongoDB
+const mongoose = require('mongoose');
 
-const UserSchema = new Schema({
-    name:{
-        type:String,
-        required :true,
-        max:20,
-    },
-    email:{
-        type:String,
-        required :true,
-        max:50
-    },
-    password:{
-        type:String,
-        required :true,
-        max:50
-    },
-    admin:{
-        type:String,
-        required :true,
-        
-    }
-});
+// User Schema
+const userSchema = new mongoose.Schema(
+	{
+		name: {
+			type: String,
+			required: true,
+		},
+		email: {
+			type: String,
+			unique: true,
+			required: true,
+			index: true,
+		},
+		password: {
+			type: String,
+			required: true,
+		},
+	},
+	{ timestamps: true }
+);
 
 
-const UserModel = new mongoose.model('blogUser', UserSchema);
- 
-module.exports = UserModel;
+const userModel = mongoose.model('blogUser', userSchema);
+
+module.exports = userModel;
